@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AVERNETH Wiki — Irklar, zindanlar ve oyun rehberi." />
+  <title>Wiki — AVERNETH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="wiki.css" />
+</head>
+<body class="wiki-page">
+  <div class="wiki-bg" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="container topbar__inner">
+      <a class="brand" href="index.html#anasayfa">
+        <img class="brand__logo" src="assets/averneth-logo.png" width="160" height="160" alt="" decoding="async" />
+        <span class="brand__text">Averneth</span>
+      </a>
+      <nav class="nav" aria-label="Ana menü">
+        <button type="button" class="nav__toggle" aria-expanded="false" aria-controls="nav-menu">Menü</button>
+        <ul id="nav-menu" class="nav__list">
+          <li><a class="nav__link" href="index.html#anasayfa">Ana Sayfa</a></li>
+          <li><a class="nav__link" href="index.html#haberler">Haberler</a></li>
+          <li><a class="nav__link" href="index.html#magaza">Mağaza</a></li>
+          <li><a class="nav__link" href="index.html#forum">Forum</a></li>
+          <li><a class="nav__link nav__link--active" href="wiki.html" aria-current="page">Wiki</a></li>
+          <li><a class="nav__link" href="index.html#yardim">Yardım</a></li>
+          <li><a class="nav__link" href="index.html#destek">Destek</a></li>
+          <li><a class="nav__link" href="index.html#yetkili-basvuru">Yetkili Başvuru</a></li>
+        </ul>
+      </nav>
+      <div class="topbar__actions wiki-top-actions">
+        <button type="button" class="ip-pill" data-copy-ip title="Adresi kopyala" aria-label="Sunucu IP kopyala">
+          <svg class="ip-pill__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 17V7a2 2 0 012-2h6l4 4v8a2 2 0 01-2 2H6a2 2 0 01-2-2z" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M10 5v4h4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M8 13h.01M12 13h.01M16 13h.01M8 16h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span class="ip-pill__text" data-server-ip>play.averneth.net</span>
+        </button>
+        <a class="btn btn--ghost" href="auth.html#giris" id="header-login">Giriş Yap</a>
+        <a class="btn btn--primary" href="auth.html#kayit" id="header-register">Kayıt Ol</a>
+        <a href="auth.html" class="header-profile" id="header-profile" style="display:none" title="Hesabım">
+          <img src="assets/averneth-logo.png" alt="Profil" class="header-profile__img" id="header-profile-img">
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wiki-main">
+    <section class="wiki-hero" aria-labelledby="wiki-hero-title">
+      <div class="container wiki-hero__inner">
+        <p class="wiki-badge">Bilgi Bankası</p>
+        <h1 id="wiki-hero-title" class="wiki-hero__title">AVERNETH WIKI</h1>
+        <p class="wiki-hero__lead">
+          Irklar, yetenekler, zindanlar ve ekonomi hakkında güncel bilgiler. Şimdilik ırk rehberi aktif; diğer bölümler yakında.
+        </p>
+        <div class="wiki-search" role="search">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M20 20l-4.3-4.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          <label class="visually-hidden" for="wiki-search">Wiki'de ara</label>
+          <input id="wiki-search" type="search" placeholder="Wiki'de ara..." autocomplete="off" />
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <nav class="wiki-cats" aria-label="Wiki kategorileri">
+        <button type="button" class="wiki-cat wiki-cat--active" aria-current="page">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          Irklar
+        </button>
+        <button type="button" class="wiki-cat" disabled aria-disabled="true" title="Yakında">
+          Sınıflar
+          <span class="wiki-cat__soon">Yakında</span>
+        </button>
+        <button type="button" class="wiki-cat" disabled aria-disabled="true" title="Yakında">
+          Yetenekler
+          <span class="wiki-cat__soon">Yakında</span>
+        </button>
+        <button type="button" class="wiki-cat" disabled aria-disabled="true" title="Yakında">
+          Eşyalar
+          <span class="wiki-cat__soon">Yakında</span>
+        </button>
+        <button type="button" class="wiki-cat" disabled aria-disabled="true" title="Yakında">
+          Zindanlar
+          <span class="wiki-cat__soon">Yakında</span>
+        </button>
+        <button type="button" class="wiki-cat" disabled aria-disabled="true" title="Yakında">
+          Üretim
+          <span class="wiki-cat__soon">Yakında</span>
+        </button>
+        <button type="button" class="wiki-cat" disabled aria-disabled="true" title="Yakında">
+          Görevler
+          <span class="wiki-cat__soon">Yakında</span>
+        </button>
+        <button type="button" class="wiki-cat" disabled aria-disabled="true" title="Yakında">
+          Ekonomi
+          <span class="wiki-cat__soon">Yakında</span>
+        </button>
+      </nav>
+
+      <section class="wiki-irk-section" aria-labelledby="irk-baslik">
+        <div class="wiki-section-head">
+          <div class="wiki-section-head__text">
+            <p class="eyebrow">Irk Rehberi</p>
+            <h2 id="irk-baslik" class="wiki-section-head__title">AVERNETH IRKLARI</h2>
+          </div>
+          <div class="wiki-filters" role="group" aria-label="Irk filtresi">
+            <button type="button" class="wiki-filter wiki-filter--active" data-wiki-filter="tumu">Tümü</button>
+            <button type="button" class="wiki-filter" data-wiki-filter="buyu">Büyü</button>
+            <button type="button" class="wiki-filter" data-wiki-filter="fiziksel">Fiziksel</button>
+            <button type="button" class="wiki-filter" data-wiki-filter="tank">Tank</button>
+            <button type="button" class="wiki-filter" data-wiki-filter="destek">Destek</button>
+          </div>
+        </div>
+
+        <div class="wiki-race-bar" role="toolbar" aria-label="Hızlı ırk seçimi">
+          <button type="button" class="wiki-race-chip wiki-race-chip--iblis" data-wiki-jump="irk-iblis">
+            <span class="wiki-race-chip__icon" aria-hidden="true">▼</span>
+            İblis
+          </button>
+          <button type="button" class="wiki-race-chip wiki-race-chip--elf" data-wiki-jump="irk-elf">
+            <span class="wiki-race-chip__icon" aria-hidden="true">❧</span>
+            Elf
+          </button>
+          <button type="button" class="wiki-race-chip wiki-race-chip--insan" data-wiki-jump="irk-insan">
+            <span class="wiki-race-chip__icon" aria-hidden="true">◉</span>
+            İnsan
+          </button>
+          <button type="button" class="wiki-race-chip wiki-race-chip--dev" data-wiki-jump="irk-dev">
+            <span class="wiki-race-chip__icon" aria-hidden="true">▣</span>
+            Dev
+          </button>
+          <button type="button" class="wiki-race-chip wiki-race-chip--cuce" data-wiki-jump="irk-cuce">
+            <span class="wiki-race-chip__icon" aria-hidden="true">⚒</span>
+            Cüce
+          </button>
+        </div>
+
+        <div class="wiki-race-grid">
+          <!-- İblis -->
+          <article
+            class="race-card race-card--iblis"
+            id="irk-iblis"
+            data-tags="buyu"
+            data-search="iblis şeytan şeytanlordu şeytanlordu cehennem ateş büyü mana"
+          >
+            <div class="race-card__media">
+              <div class="race-card__media-inner">
+                <div>
+                  <h3 class="race-card__name">İBLİS</h3>
+                  <p class="race-card__stages">2 evrim aşaması</p>
+                </div>
+                <div class="race-card__corner-icon" aria-hidden="true">🔥</div>
+              </div>
+            </div>
+            <div class="race-card__body">
+              <p class="race-card__desc">
+                Cehennem alevlerinden beslenen karanlık varlıklar. Ateş onlara dokunmaz, su ise en büyük düşmanlarıdır. Büyü hasarında zirvedirler fakat fiziksel savunmaları incedir.
+              </p>
+              <div class="race-stats">
+                <div class="race-stat">
+                  <svg class="race-stat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 21s-7-4.35-7-11a4.5 4.5 0 0 1 9-11a4.5 4.5 0 0 1 9 11c0 6.65-7 11-7 11z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="race-stat__val">110</span>
+                  <span class="race-stat__label">Can</span>
+                </div>
+                <div class="race-stat">
+                  <svg class="race-stat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 2.5c-4 6-6 9.5-6 12.5a6 6 0 0 1 12 0c0-3-2-6.5-6-12.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="race-stat__val">200</span>
+                  <span class="race-stat__label">Mana</span>
+                </div>
+                <div class="race-stat">
+                  <svg class="race-stat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M8 8l8 8M16 8l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M4 18h4l2-4M16 6h4l-2 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="race-stat__val">13</span>
+                  <span class="race-stat__label">Güç</span>
+                </div>
+              </div>
+              <details>
+                <summary>
+                  Tüm detayları gör
+                  <span class="chev" aria-hidden="true">▼</span>
+                </summary>
+                <div class="race-card__details-inner">
+                  <div class="evo-block">
+                    <h4 class="evo-block__title">İblis</h4>
+                    <span class="evo-block__meta">Başlangıç formu</span>
+                    <p>Açıklama: Cehennem alevlerinden beslenen karanlık varlıklar. Ateş onlara dokunmaz, su ise en büyük düşmanlarıdır. Büyü hasarında zirvedirler fakat fiziksel savunmaları incedir.</p>
+                    <p class="evo-block__label">Pasif</p>
+                    <p class="evo-block__text">Güç 13, Can 110, Mana 200, Rejen 1.5/sn, Şans 5, Dayanıklılık 9, Kritik %12, Kritik Hasar %18, Hız 100</p>
+                    <p class="evo-block__label">Yetenek</p>
+                    <p class="evo-block__text">Büyü hasarı +%15 | Ateş bağışık (burning-time:0) | Sudan hasar alır</p>
+                  </div>
+                  <div class="evo-block">
+                    <h4 class="evo-block__title">Şeytan</h4>
+                    <span class="evo-block__meta">İblis evrimi — Lv.20</span>
+                    <p>Açıklama: İblisin daha güçlü ve korku salan formu. Büyük boynuzlar ve kanat taslağıyla tanınır.</p>
+                    <p class="evo-block__label">Pasif</p>
+                    <p class="evo-block__text">Güç 15, Can 130, Mana 230, Rejen 2.0/sn, Şans 5, Dayanıklılık 11, Kritik %11, Kritik Hasar %16, Hız 100</p>
+                    <p class="evo-block__label">Yetenek</p>
+                    <p class="evo-block__text">Korku aurası (MythicMobs) | Ateş bağışık | Sudan hasar alır</p>
+                  </div>
+                  <div class="evo-block">
+                    <h4 class="evo-block__title">ŞEYTANLOARDU</h4>
+                    <span class="evo-block__meta">Şeytan evrimi — Lv.50</span>
+                    <p>Açıklama: İblis ırkının nihai formu. Tam kanatlar ve olağanüstü büyü gücüyle donatılmıştır.</p>
+                    <p class="evo-block__label">Pasif</p>
+                    <p class="evo-block__text">Güç 17, Can 155, Mana 280, Rejen 2.5/sn, Şans 6, Dayanıklılık 13, Kritik %14, Kritik Hasar %20, Hız 100</p>
+                    <p class="evo-block__label">Yetenek</p>
+                    <p class="evo-block__text">Büyü hasarı +%25 | Ateş bağışık | Sudan hasar alır</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </article>
+
+          <!-- Elf -->
+          <article
+            class="race-card race-card--elf"
+            id="irk-elf"
+            data-tags="buyu destek"
+            data-search="elf melek serafim doğa ok iyileştirme"
+          >
+            <div class="race-card__media">
+              <div class="race-card__media-inner">
+                <div>
+                  <h3 class="race-card__name">ELF</h3>
+                  <p class="race-card__stages">2 evrim aşaması</p>
+                </div>
+                <div class="race-card__corner-icon" aria-hidden="true">🍃</div>
+              </div>
+            </div>
+            <div class="race-card__body">
+              <p class="race-card__desc">
+                Doğayla iç içe büyümüş, uzun ömürlü bir ırk. Savaşta hız ve hassasiyete güvenir. Vücut yenilenme güçleri olağanüstü yüksektir.
+              </p>
+              <div class="race-stats">
+                <div class="race-stat">
+                  <svg class="race-stat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 21s-7-4.35-7-11a4.5 4.5 0 0 1 9-11a4.5 4.5 0 0 1 9 11c0 6.65-7 11-7 11z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="race-stat__val">95</span>
+                  <span class="race-stat__label">Can</span>
+                </div>
+                <div class="race-stat">
+                  <svg class="race-stat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 2.5c-4 6-6 9.5-6 12.5a6 6 0 0 1 12 0c0-3-2-6.5-6-12.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="race-stat__val">150</span>
+                  <span class="race-stat__label">Mana</span>
+                </div>
+                <div class="race-stat">
+                  <svg class="race-stat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M8 8l8 8M16 8l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M4 18h4l2-4M16 6h4l-2 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="race-stat__val">11</span>
+                  <span class="race-stat__label">Güç</span>
+                </div>
+              </div>
+              <details>
+                <summary>
+                  Tüm detayları gör
+                  <span class="chev" aria-hidden="true">▼</span>
+                </summary>
+                <div class="race-card__details-inner">
+                  <div class="evo-block">
+                    <h4 class="evo-block__title">Elf</h4>
+                    <span class="evo-block__meta">Başlangıç formu</span>
+                    <p>Açıklama: Doğayla iç içe büyümüş, uzun ömürlü bir ırk. Savaşta hız ve hassasiyete güvenir. Vücut yenilenme güçleri olağanüstü yüksektir.</p>
+                    <p class="evo-block__label">Pasif</p>
+                    <p class="evo-block__text">Güç 11, Can 95, Mana 150, Rejen 2.5/sn, Şans 10, Dayanıklılık 8, Kritik %16, Kritik Hasar %22, Hız 100</p>
+                    <p class="evo-block__label">Yetenek</p>
+                    <p class="evo-block__text">Ok hasarı +%20 | health-regen attr. ile hızlı can yenilenme</p>
+                  </div>
+                  <div class="evo-block">
+                    <h4 class="evo-block__title">Melek</h4>
+                    <span class="evo-block__meta">Elf evrimi — Lv.25</span>
+                    <p>Açıklama: Doğanın iyileştirici gücünü tam anlamıyla özümsemiş Elf formu. Küçük beyaz kanatlar ve halo taşır.</p>
+                    <p class="evo-block__label">Pasif</p>
+                    <p class="evo-block__text">Güç 12, Can 110, Mana 200, Rejen 3.5/sn, Şans 10, Dayanıklılık 10, Kritik %14, Kritik Hasar %20, Hız 100</p>
+                    <p class="evo-block__label">Yetenek</p>
+                    <p class="evo-block__text">İyileştirme büyüsü +%25 | Çok hızlı can yenilenme</p>
+                  </div>
+                  <div class="evo-block">
+                    <h4 class="evo-block__title">Serafim</h4>
+                    <span class="evo-block__meta">Melek evrimi — Lv.55</span>
+                    <p>Açıklama: Elf ırkının nihai formu. 6 büyük kanat ve parlak halo ile en yüksek can yenilenme hızına sahiptir.</p>
+                    <p class="evo-block__label">Pasif</p>
+                    <p class="evo-block__text">Güç 14, Can 125, Mana 240, Rejen 5.0/sn, Şans 12, Dayanıklılık 12, Kritik %15, Kritik Hasar %22, Hız 100</p>
+                    <p class="evo-block__label">Yetenek</p>
+                    <p class="evo-block__text">En yüksek can yenilenme hızı | 6 kanatlı görünüm</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </article>
+
+          <!-- İnsan -->
+          <article
+            class="race-card race-card--insan"
+            id="irk-insan"
+            data-tags="fiziksel destek"
+            data-search="insan kahraman imparator xp uyarlanabilir"
+          >
+            <div class="race-card__media">
+              <div class="race-card__media-inner">
+                <div>
+                  <h3 class="race-card__name">İNSAN</h3>
+                  <p class="race-card__stages">2 evrim aşaması</p>
+                </div>
+                <div class="race-card__corner-icon" aria-hidden="true">✦</div>
+              </div>
+            </div>
+            <div class="race-card__body">
+              <p class="race-card__desc">
+                Ne çok güçlü ne çok zayıf, tam da bu yüzden en uyarlanabilir ırktır. Evrimleşince tarihin en büyük kahramanlarına ve imparatorlarına dönüşür.
+              </p>
+              <div class="race-stats">
+                <div class="race-stat">
+                  <svg class="race-stat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 21s-7-4.35-7-11a4.5 4.5 0 0 1 9-11a4.5 4.5 0 0 1 9 11c0 6.65-7 11-7 11z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="race-stat__val">100</span>
+                  <span class="race-stat__label">Can</span>
+                </div>
+                <div class="race-stat">
+                  <svg class="race-stat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 2.5c-4 6-6 9.5-6 12.5a6 6 0 0 1 12 0c0-3-2-6.5-6-12.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="race-stat__val">100</span>
+                  <span class="race-stat__label">Mana</span>
+                </div>
+                <div class="race-stat">
+                  <svg class="race-stat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M8 8l8 8M16 8l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M4 18h4l2-4M16 6h4l-2 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="race-stat__val">10</span>
+                  <span class="race-stat__label">Güç</span>
+                </div>
+              </div>
+              <details>
+                <summary>
+                  Tüm detayları gör
+                  <span class="chev" aria-hidden="true">▼</span>
+                </summary>
+                <div class="race-card__details-inner">
+                  <div class="evo-block">
+                    <h4 class="evo-block__title">İnsan</h4>
+                    <span class="evo-block__meta">Başlangıç formu</span>
+                    <p>Açıklama: Ne çok güçlü ne çok zayıf, tam da bu yüzden en uyarlanabilir ırktır. Evrimleşince tarihin en büyük kahramanlarına ve imparatorlarına dönüşür.</p>
+                    <p class="evo-block__label">Pasif</p>
+                    <p class="evo-block__text">Güç 10, Can 100, Mana 100, Rejen 1.0/sn, Şans 8, Dayanıklılık 10, Kritik %10, Kritik Hasar %15, Hız 100</p>
+                    <p class="evo-block__label">Yetenek</p>
+                    <p class="evo-block__text">XP kazanımı +%10 | Her stat +1 pasif bonus | Tüm silahları kullanabilir</p>
+                  </div>
+                  <div class="evo-block">
+                    <h4 class="evo-block__title">Kahraman</h4>
+                    <span class="evo-block__meta">İnsan evrimi — Lv.30</span>
+                    <p>Açıklama: Savaşın kıyısında en parlayan insan formu. Omuzlarda epaulet/rozet taşır.</p>
+                    <p class="evo-block__label">Pasif</p>
+                    <p class="evo-block__text">Güç 14, Can 120, Mana 120, Rejen 1.5/sn, Şans 8, Dayanıklılık 13, Kritik %11, Kritik Hasar %16, Hız 102</p>
+                    <p class="evo-block__label">Yetenek</p>
+                    <p class="evo-block__text">Son nefes (MythicMobs) — %20 HP altında hasar +%30</p>
+                  </div>
+                  <div class="evo-block">
+                    <h4 class="evo-block__title">İmparator</h4>
+                    <span class="evo-block__meta">Kahraman evrimi — Lv.60</span>
+                    <p>Açıklama: İnsan ırkının nihai formu. Kron takar, tüm takıma ilham verir.</p>
+                    <p class="evo-block__label">Pasif</p>
+                    <p class="evo-block__text">Güç 16, Can 140, Mana 150, Rejen 2.0/sn, Şans 10, Dayanıklılık 15, Kritik %13, Kritik Hasar %18, Hız 104</p>
+                    <p class="evo-block__label">Yetenek</p>
+                    <p class="evo-block__text">Komuta aurası (MythicMobs) — takım hasarı +%10</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </article>
+
+          <!-- Dev -->
+          <article
+            class="race-card race-card--dev"
+            id="irk-dev"
+            data-tags="fiziksel tank"
+            data-search="dev fomorian titan titan knockback dayanıklı"
+          >
+            <div class="race-card__media">
+              <div class="race-card__media-inner">
+                <div>
+                  <h3 class="race-card__name">DEV</h3>
+                  <p class="race-card__stages">2 evrim aşaması</p>
+                </div>
+                <div class="race-card__corner-icon" aria-hidden="true">⬛</div>
+              </div>
+            </div>
+            <div class="race-card__body">
+              <p class="race-card__desc">
+                Yeryüzünün en iri ve en dayanıklı ırkı. Yavaş adımları savaş alanını titretir. Bir Titan yaklaşırken duvar gibi durur.
+              </p>
+              <div class="race-stats">
+                <div class="race-stat">
+                  <svg class="race-stat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 21s-7-4.35-7-11a4.5 4.5 0 0 1 9-11a4.5 4.5 0 0 1 9 11c0 6.65-7 11-7 11z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="race-stat__val">180</span>
+                  <span class="race-stat__label">Can</span>
+                </div>
+                <div class="race-stat">
+                  <svg class="race-stat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 2.5c-4 6-6 9.5-6 12.5a6 6 0 0 1 12 0c0-3-2-6.5-6-12.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="race-stat__val">50</span>
+                  <span class="race-stat__label">Mana</span>
+                </div>
+                <div class="race-stat">
+                  <svg class="race-stat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M8 8l8 8M16 8l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M4 18h4l2-4M16 6h4l-2 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="race-stat__val">15</span>
+                  <span class="race-stat__label">Güç</span>
+                </div>
+              </div>
+              <details>
+                <summary>
+                  Tüm detayları gör
+                  <span class="chev" aria-hidden="true">▼</span>
+                </summary>
+                <div class="race-card__details-inner">
+                  <div class="evo-block">
+                    <h4 class="evo-block__title">Dev</h4>
+                    <span class="evo-block__meta">Başlangıç formu</span>
+                    <p>Açıklama: Yeryüzünün en iri ve en dayanıklı ırkı. Yavaş adımları savaş alanını titretir. Bir Titan yaklaşırken duvar gibi durur.</p>
+                    <p class="evo-block__label">Pasif</p>
+                    <p class="evo-block__text">Güç 15, Can 180, Mana 50, Rejen 0.5/sn, Şans 5, Dayanıklılık 13, Kritik %15, Kritik Hasar %28, Hız 82</p>
+                    <p class="evo-block__label">Yetenek</p>
+                    <p class="evo-block__text">knockback-resistance yüksek | Blok engelleme +%30</p>
+                  </div>
+                  <div class="evo-block">
+                    <h4 class="evo-block__title">Fomorian</h4>
+                    <span class="evo-block__meta">Dev evrimi — Lv.20</span>
+                    <p>Açıklama: Devlerin savaşçı formu. Omuzlarda kaya parçası taşır, çarpma saldırısıyla zemin sarsar.</p>
+                    <p class="evo-block__label">Pasif</p>
+                    <p class="evo-block__text">Güç 17, Can 215, Mana 65, Rejen 0.8/sn, Şans 5, Dayanıklılık 16, Kritik %16, Kritik Hasar %30, Hız 81</p>
+                    <p class="evo-block__label">Yetenek</p>
+                    <p class="evo-block__text">Çarpma saldırısı (MythicMobs) — zemin sarsar</p>
+                  </div>
+                  <div class="evo-block">
+                    <h4 class="evo-block__title">Titan</h4>
+                    <span class="evo-block__meta">Fomorian evrimi — Lv.50</span>
+                    <p>Açıklama: Dev ırkının nihai formu. Büyük omuz zırhı taşır, geniş alana yumruk vurur.</p>
+                    <p class="evo-block__label">Pasif</p>
+                    <p class="evo-block__text">Güç 19, Can 250, Mana 80, Rejen 1.0/sn, Şans 6, Dayanıklılık 19, Kritik %18, Kritik Hasar %35, Hız 82</p>
+                    <p class="evo-block__label">Yetenek</p>
+                    <p class="evo-block__text">Titan yumruğu geniş AoE (MythicMobs)</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </article>
+
+          <!-- Cüce -->
+          <article
+            class="race-card race-card--cuce"
+            id="irk-cuce"
+            data-tags="fiziksel tank"
+            data-search="cüce duergar urdunnir maden küçük şans dayanıklılık"
+          >
+            <div class="race-card__media">
+              <div class="race-card__media-inner">
+                <div>
+                  <h3 class="race-card__name">CÜCE</h3>
+                  <p class="race-card__stages">2 evrim aşaması</p>
+                </div>
+                <div class="race-card__corner-icon" aria-hidden="true">⛏</div>
+              </div>
+            </div>
+            <div class="race-card__body">
+              <p class="race-card__desc">
+                Kısa boylu (1.5 blok) ama inanılmaz dayanıklı bir ırk. Madencilik onların kanı, taş ise kalkanları. Küçük boyları savunmada avantaj sağlar.
+              </p>
+              <div class="race-stats">
+                <div class="race-stat">
+                  <svg class="race-stat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 21s-7-4.35-7-11a4.5 4.5 0 0 1 9-11a4.5 4.5 0 0 1 9 11c0 6.65-7 11-7 11z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="race-stat__val">105</span>
+                  <span class="race-stat__label">Can</span>
+                </div>
+                <div class="race-stat">
+                  <svg class="race-stat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 2.5c-4 6-6 9.5-6 12.5a6 6 0 0 1 12 0c0-3-2-6.5-6-12.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="race-stat__val">60</span>
+                  <span class="race-stat__label">Mana</span>
+                </div>
+                <div class="race-stat">
+                  <svg class="race-stat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M8 8l8 8M16 8l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M4 18h4l2-4M16 6h4l-2 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="race-stat__val">11</span>
+                  <span class="race-stat__label">Güç</span>
+                </div>
+              </div>
+              <details>
+                <summary>
+                  Tüm detayları gör
+                  <span class="chev" aria-hidden="true">▼</span>
+                </summary>
+                <div class="race-card__details-inner">
+                  <div class="evo-block">
+                    <h4 class="evo-block__title">Cüce</h4>
+                    <span class="evo-block__meta">Başlangıç formu</span>
+                    <p>Açıklama: Kısa boylu (1.5 blok) ama inanılmaz dayanıklı bir ırk. Madencilik onların kanı, taş ise kalkanları. Küçük boyları savunmada avantaj sağlar.</p>
+                    <p class="evo-block__label">Pasif</p>
+                    <p class="evo-block__text">Güç 11, Can 105, Mana 60, Rejen 1.0/sn, Şans 20, Dayanıklılık 15, Kritik %8, Kritik Hasar %12, Hız 85</p>
+                    <p class="evo-block__label">Yetenek</p>
+                    <p class="evo-block__text">block-break-speed +%30 | knockback-resistance yüksek | Küçük boy avantajı</p>
+                  </div>
+                  <div class="evo-block">
+                    <h4 class="evo-block__title">Duergar</h4>
+                    <span class="evo-block__meta">Cüce evrimi — Lv.25</span>
+                    <p>Açıklama: Karanlık derinliklerin sertleştirdiği Cüce formu. Koyu zırh ve kızıl gözleriyle tanınır.</p>
+                    <p class="evo-block__label">Pasif</p>
+                    <p class="evo-block__text">Güç 14, Can 125, Mana 75, Rejen 1.5/sn, Şans 25, Dayanıklılık 19, Kritik %9, Kritik Hasar %13, Hız 87</p>
+                    <p class="evo-block__label">Yetenek</p>
+                    <p class="evo-block__text">Zehir direnci | Çekiç soku AoE (MythicMobs)</p>
+                  </div>
+                  <div class="evo-block">
+                    <h4 class="evo-block__title">Urdunnir</h4>
+                    <span class="evo-block__meta">Duergar evrimi — Lv.55</span>
+                    <p>Açıklama: Cüce ırkının nihai formu. Sırtında run taşı taşır, silahlarına elemental güç katar.</p>
+                    <p class="evo-block__label">Pasif</p>
+                    <p class="evo-block__text">Güç 15, Can 135, Mana 110, Rejen 2.0/sn, Şans 30, Dayanıklılık 20, Kritik %11, Kritik Hasar %15, Hız 88</p>
+                    <p class="evo-block__label">Yetenek</p>
+                    <p class="evo-block__text">Run silahı elemental efekt (MythicMobs) | Taş derisi pasifi</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </article>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div>
+        <h3 class="footer__heading">Wiki</h3>
+        <p class="footer__text">
+          AVERNETH oyun içi bilgileri özetler; değerler güncellemelere göre değişebilir.
+        </p>
+        <p class="footer__copy">AVERNETH. © <span id="year"></span></p>
+      </div>
+      <div>
+        <h3 class="footer__heading">Bağlantılar</h3>
+        <ul class="footer__links">
+          <li><a href="index.html">Ana sayfa</a></li>
+          <li><a href="wiki.html">Wiki</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="footer__heading">Sunucu</h3>
+        <p class="footer__text"><code id="server-ip">play.averneth.net</code></p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="wiki.js"></script>
+</body>
+</html>

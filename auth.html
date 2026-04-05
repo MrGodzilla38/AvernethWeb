@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AVERNETH — Oyuncu girişi ve kayıt (nLogin uyumlu)." />
+  <title>Hesap — AVERNETH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="auth.css" />
+</head>
+<!--
+  API kökü: statik site ve API aynı alan adında ise data-api-base boş bırakın (örn. /api yolları).
+  Geliştirme: API 3847 portundaysa örn. data-api-base="http://127.0.0.1:3847"
+-->
+<body class="auth-page" data-api-base="">
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="container topbar__inner">
+      <a class="brand" href="index.html#anasayfa">
+        <img class="brand__logo" src="assets/averneth-logo.png" width="160" height="160" alt="" decoding="async" />
+        <span class="brand__text">Averneth</span>
+      </a>
+      <nav class="nav" aria-label="Ana menü">
+        <button type="button" class="nav__toggle" aria-expanded="false" aria-controls="nav-menu">Menü</button>
+        <ul id="nav-menu" class="nav__list">
+          <li><a class="nav__link" href="index.html#anasayfa">Ana Sayfa</a></li>
+          <li><a class="nav__link" href="index.html#haberler">Haberler</a></li>
+          <li><a class="nav__link" href="index.html#magaza">Mağaza</a></li>
+          <li><a class="nav__link" href="index.html#forum">Forum</a></li>
+          <li><a class="nav__link" href="wiki.html">Wiki</a></li>
+          <li><a class="nav__link" href="index.html#yardim">Yardım</a></li>
+          <li><a class="nav__link" href="index.html#destek">Destek</a></li>
+          <li><a class="nav__link" href="index.html#yetkili-basvuru">Yetkili Başvuru</a></li>
+        </ul>
+      </nav>
+      <div class="topbar__actions wiki-top-actions">
+        <button type="button" class="ip-pill" data-copy-ip title="Adresi kopyala" aria-label="Sunucu IP kopyala">
+          <svg class="ip-pill__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 17V7a2 2 0 012-2h6l4 4v8a2 2 0 01-2 2H6a2 2 0 01-2-2z" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M10 5v4h4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M8 13h.01M12 13h.01M16 13h.01M8 16h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span class="ip-pill__text" data-server-ip>play.averneth.net</span>
+        </button>
+        <a class="btn btn--ghost" href="auth.html#giris" id="header-login">Giriş Yap</a>
+        <a class="btn btn--primary" href="auth.html#kayit" id="header-register">Kayıt Ol</a>
+        <a href="auth.html" class="header-profile" id="header-profile" style="display:none" title="Hesabım">
+          <img src="assets/averneth-logo.png" alt="Profil" class="header-profile__img" id="header-profile-img">
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="auth-main">
+    <!-- Giriş Yapmamış Görünüm -->
+    <div class="container auth-layout" id="auth-guest-view">
+      <div class="auth-hero">
+        <h1 class="auth-hero__title">Hesap</h1>
+      </div>
+
+      <div class="auth-forms">
+        <div id="giris" class="auth-card" tabindex="-1">
+          <h2 class="auth-card__title">Giriş</h2>
+          <form id="form-login" class="auth-form" autocomplete="on">
+            <div class="auth-field">
+              <label for="login-user">Oyuncu adı</label>
+              <input id="login-user" name="username" type="text" required minlength="3" maxlength="16" pattern="[a-zA-Z0-9_]{3,16}" autocomplete="username" />
+            </div>
+            <div class="auth-field">
+              <label for="login-pass">Şifre</label>
+              <div class="password-input-wrapper">
+                <input id="login-pass" name="password" type="password" required autocomplete="current-password" />
+                <button type="button" class="password-toggle" aria-label="Şifreyi göster">
+                  <svg class="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path class="eye-open" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle class="eye-open" cx="12" cy="12" r="3" />
+                    <line class="eye-closed" x1="1" y1="1" x2="23" y2="23" style="display:none" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <p class="auth-hint">Şifre uzunluğu sunucu ayarıyla uyumludur (genelde 5–32 karakter).</p>
+            <div class="auth-actions">
+              <button type="submit" class="btn btn--primary">Giriş yap</button>
+            </div>
+            <p id="msg-login" class="auth-msg" role="alert"></p>
+          </form>
+        </div>
+
+        <div id="kayit" class="auth-card" tabindex="-1">
+          <h2 class="auth-card__title">Kayıt</h2>
+          <form id="form-register" class="auth-form" autocomplete="on">
+            <div class="auth-field">
+              <label for="reg-user">Oyuncu adı</label>
+              <input id="reg-user" name="username" type="text" required minlength="3" maxlength="16" pattern="[a-zA-Z0-9_]{3,16}" autocomplete="username" />
+            </div>
+            <div class="auth-field">
+              <label for="reg-pass">Şifre</label>
+              <div class="password-input-wrapper">
+                <input id="reg-pass" name="password" type="password" required minlength="5" maxlength="32" autocomplete="new-password" />
+                <button type="button" class="password-toggle" aria-label="Şifreyi göster">
+                  <svg class="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path class="eye-open" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle class="eye-open" cx="12" cy="12" r="3" />
+                    <line class="eye-closed" x1="1" y1="1" x2="23" y2="23" style="display:none" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="auth-field">
+              <label for="reg-pass-confirm">Şifre Onay</label>
+              <div class="password-input-wrapper">
+                <input id="reg-pass-confirm" type="password" required minlength="5" maxlength="32" autocomplete="new-password" />
+              </div>
+            </div>
+            <div class="auth-field">
+              <label for="reg-email">E-posta</label>
+              <input id="reg-email" name="email" type="email" required maxlength="254" autocomplete="email" inputmode="email" placeholder="ornek@posta.com" />
+            </div>
+            <p class="auth-hint">Minecraft kullanıcı adı kuralları geçerlidir. E-posta nLogin hesabınızda (kurtarma vb.) kullanılır. Kayıttan sonra oyunda aynı bilgilerle oturum açın.</p>
+            <div class="auth-actions">
+              <button type="submit" class="btn btn--primary">Hesap oluştur</button>
+            </div>
+            <p id="msg-register" class="auth-msg" role="alert"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard Görünümü (Giriş yapıldığında gösterilir) -->
+    <div class="container dashboard" id="auth-user-view" style="display: none;">
+      <aside class="dashboard__sidebar">
+        <div class="profile-card">
+          <div class="profile-card__avatar">
+            <img src="assets/averneth-logo.png" alt="Avatar" id="user-avatar-img">
+          </div>
+          <div class="profile-card__info">
+            <h3 class="profile-card__name" id="user-display-name">OyuncuAdı</h3>
+            <span class="profile-card__rank" id="user-display-rank">Üye</span>
+          </div>
+        </div>
+
+        <nav class="dashboard-nav">
+          <div class="dashboard-nav__group">
+            <h4 class="dashboard-nav__title">Hesabım</h4>
+            <ul class="dashboard-nav__list">
+              <li><a href="#" class="dashboard-nav__link active"><span class="icon">👤</span> Profil</a></li>
+              <li><a href="#" class="dashboard-nav__link"><span class="icon">🛒</span> Siparişler</a></li>
+              <li><a href="#" class="dashboard-nav__link"><span class="icon">🔄</span> Abonelikler</a></li>
+              <li><a href="#" class="dashboard-nav__link"><span class="icon">💳</span> Kredi Geçmişi</a></li>
+              <li><a href="#" class="dashboard-nav__link"><span class="icon">📄</span> Başvurular</a></li>
+            </ul>
+          </div>
+
+          <div class="dashboard-nav__group">
+            <h4 class="dashboard-nav__title">Ayarlar</h4>
+            <ul class="dashboard-nav__list">
+              <li><a href="#" class="dashboard-nav__link"><span class="icon">⚙️</span> Profil Düzenle</a></li>
+              <li><a href="#" class="dashboard-nav__link"><span class="icon">🔒</span> Güvenlik</a></li>
+              <li><a href="#" class="dashboard-nav__link"><span class="icon">📱</span> Discord Hesabını Bağla</a></li>
+              <li><button type="button" class="dashboard-nav__link logout-btn-sidebar" id="btn-logout-sidebar"><span class="icon">🚪</span> Çıkış Yap</button></li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
+
+      <div class="dashboard__content">
+        <section class="dashboard-section">
+          <h3 class="dashboard-section__title">Detaylar</h3>
+          <div class="details-grid">
+            <div class="details-item">
+              <span class="details-item__label">Bakiye:</span>
+              <div class="details-item__value bakiye-box">
+                <span id="user-balance">0.00 ₺</span>
+                <button class="add-balance-btn">+</button>
+              </div>
+            </div>
+            <div class="details-item">
+              <span class="details-item__label">Kayıt Tarihi:</span>
+              <span class="details-item__value" id="user-reg-date">-</span>
+            </div>
+            <div class="details-item">
+              <span class="details-item__label">Yetki:</span>
+              <span class="details-item__value" id="user-rank-detail">Üye</span>
+            </div>
+            <div class="details-item">
+              <span class="details-item__label">İki Adımlı Doğrulama:</span>
+              <span class="details-item__value status-disabled" id="user-2fa-status">Devre-dışı</span>
+            </div>
+            <div class="details-item full-width">
+              <span class="details-item__label">E-Posta:</span>
+              <span class="details-item__value" id="user-email">-</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="dashboard-section">
+          <h3 class="dashboard-section__title">Destek Talepleri</h3>
+          <div class="empty-state">Veri bulunamadı!</div>
+        </section>
+
+        <section class="dashboard-section">
+          <h3 class="dashboard-section__title">Kredi Geçmişi</h3>
+          <div class="table-responsive">
+            <table class="dashboard-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>MİKTAR</th>
+                  <th>TÜR</th>
+                  <th>TARİH</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="4" class="empty-table">Henüz kredi işlemi yok.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="dashboard-section">
+          <h3 class="dashboard-section__title">Siparişler</h3>
+          <div class="empty-state">Veri bulunamadı!</div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div>
+        <h3 class="footer__heading">Hesap</h3>
+        <p class="footer__text">
+          Bu sayfa, nLogin ile paylaşılan MySQL veritabanına BCrypt ile hashlenmiş şifre yazar. Güvenlik için API’yi HTTPS üzerinden yayınlayın ve <code>JWT_SECRET</code> değerini güçlü tutun.
+        </p>
+        <p class="footer__copy">AVERNETH. © <span id="year"></span></p>
+      </div>
+      <div>
+        <h3 class="footer__heading">Hızlı menü</h3>
+        <ul class="footer__links">
+          <li><a href="index.html#anasayfa">Ana Sayfa</a></li>
+          <li><a href="wiki.html">Wiki</a></li>
+          <li><a href="index.html#destek">Destek</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="script.js"></script>
+  <script src="auth.js"></script>
+</body>
+</html>

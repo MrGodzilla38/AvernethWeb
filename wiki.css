@@ -1,0 +1,593 @@
+/* AVERNETH Wiki — page-specific (extends styles.css) */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.wiki-page {
+  min-height: 100vh;
+  background: var(--bg-deep);
+}
+
+.wiki-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(180deg, rgba(4, 8, 18, 0.82) 0%, rgba(6, 10, 20, 0.88) 45%, rgba(3, 5, 14, 0.92) 100%),
+    url("assets/wiki_ap.jpg") center center / cover no-repeat;
+  background-attachment: fixed;
+  pointer-events: none;
+}
+
+.wiki-page > .noise {
+  z-index: 1;
+}
+
+.wiki-page .topbar {
+  position: relative;
+  z-index: 20;
+}
+
+.wiki-main {
+  position: relative;
+  z-index: 10;
+  padding-bottom: 4rem;
+}
+
+/* Wiki hero */
+.wiki-hero {
+  position: relative;
+  padding: 2.5rem 0 2rem;
+  overflow: hidden;
+}
+
+.wiki-hero__inner {
+  text-align: center;
+  max-width: 42rem;
+  margin-inline: auto;
+}
+
+.wiki-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 1rem;
+  padding: 0.35rem 1rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--purple-300);
+  background: rgba(91, 33, 182, 0.4);
+  border: 1px solid rgba(167, 139, 250, 0.4);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 0 24px rgba(124, 58, 237, 0.2);
+}
+
+.wiki-hero__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  letter-spacing: 0.06em;
+  margin: 0 0 0.85rem;
+  color: var(--silver-100);
+  text-shadow: 0 4px 32px rgba(0, 0, 0, 0.5);
+}
+
+.wiki-hero__lead {
+  margin: 0 auto 1.5rem;
+  font-size: 0.98rem;
+  color: rgba(226, 232, 240, 0.88);
+  line-height: 1.6;
+  max-width: 38ch;
+}
+
+.wiki-search {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  max-width: 36rem;
+  margin-inline: auto;
+  padding: 0.65rem 1rem;
+  background: rgba(8, 12, 24, 0.75);
+  border: 1px solid rgba(167, 139, 250, 0.28);
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
+}
+
+.wiki-search svg {
+  flex-shrink: 0;
+  opacity: 0.65;
+  color: var(--purple-300);
+}
+
+.wiki-search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: var(--silver-100);
+  font-family: inherit;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.wiki-search input::placeholder {
+  color: rgba(148, 163, 184, 0.75);
+}
+
+/* Category tabs */
+.wiki-cats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0 2rem;
+}
+
+.wiki-cat {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.95rem;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: rgba(15, 26, 46, 0.65);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.wiki-cat:hover:not(:disabled) {
+  border-color: rgba(167, 139, 250, 0.35);
+  color: var(--silver-400);
+}
+
+.wiki-cat--active {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.55), rgba(91, 33, 182, 0.65));
+  border-color: rgba(167, 139, 250, 0.55);
+  color: var(--silver-100);
+  box-shadow: 0 0 28px rgba(124, 58, 237, 0.25);
+}
+
+.wiki-cat:disabled,
+.wiki-cat[aria-disabled="true"] {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+.wiki-cat__soon {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  background: rgba(148, 163, 184, 0.12);
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.wiki-cat svg {
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+/* Irk section header */
+.wiki-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.wiki-section-head__text .eyebrow {
+  margin-bottom: 0.35rem;
+}
+
+.wiki-section-head__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin: 0;
+  color: var(--silver-100);
+  letter-spacing: 0.04em;
+}
+
+.wiki-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.wiki-filter {
+  padding: 0.4rem 0.75rem;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: rgba(12, 18, 32, 0.7);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.wiki-filter:hover {
+  border-color: rgba(167, 139, 250, 0.35);
+  color: var(--silver-400);
+}
+
+.wiki-filter--active {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.45), rgba(91, 33, 182, 0.5));
+  border-color: rgba(167, 139, 250, 0.45);
+  color: var(--silver-100);
+}
+
+/* Race quick bar */
+.wiki-race-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1.5rem;
+}
+
+.wiki-race-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.85rem;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--silver-400);
+  background: rgba(10, 16, 30, 0.75);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.wiki-race-chip:hover {
+  transform: translateY(-1px);
+  border-color: rgba(167, 139, 250, 0.35);
+  color: var(--silver-100);
+}
+
+.wiki-race-chip__icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  font-size: 0.75rem;
+}
+
+.wiki-race-chip--iblis .wiki-race-chip__icon {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+.wiki-race-chip--elf .wiki-race-chip__icon {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+}
+.wiki-race-chip--insan .wiki-race-chip__icon {
+  background: rgba(234, 179, 8, 0.2);
+  color: #facc15;
+}
+.wiki-race-chip--dev .wiki-race-chip__icon {
+  background: rgba(168, 85, 247, 0.2);
+  color: #c084fc;
+}
+.wiki-race-chip--cuce .wiki-race-chip__icon {
+  background: rgba(217, 119, 6, 0.2);
+  color: #fb923c;
+}
+
+/* Race cards grid */
+.wiki-race-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: 1.25rem;
+}
+
+.race-card {
+  --race-accent: var(--purple-500);
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(165deg, rgba(18, 28, 48, 0.92), rgba(8, 12, 24, 0.95));
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+  transition: border-color 0.2s, box-shadow 0.2s, opacity 0.2s, transform 0.2s;
+}
+
+.race-card.is-hidden {
+  display: none;
+}
+
+.race-card:hover {
+  border-color: color-mix(in srgb, var(--race-accent) 45%, transparent);
+  box-shadow: 0 20px 56px rgba(0, 0, 0, 0.4), 0 0 0 1px color-mix(in srgb, var(--race-accent) 25%, transparent);
+}
+
+@keyframes wiki-race-pulse {
+  0%,
+  100% {
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+  }
+  40% {
+    box-shadow:
+      0 16px 48px rgba(0, 0, 0, 0.35),
+      0 0 0 3px rgba(124, 58, 237, 0.55),
+      0 0 32px rgba(124, 58, 237, 0.35);
+  }
+}
+
+.race-card--pulse {
+  animation: wiki-race-pulse 1s ease;
+}
+
+.race-card__media {
+  position: relative;
+  min-height: 160px;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--race-accent) 35%, #0a0f1a), #060a12);
+}
+
+.race-card__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 30%, rgba(4, 6, 14, 0.92) 100%);
+  pointer-events: none;
+}
+
+.race-card__media-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 1rem 1.1rem;
+  z-index: 1;
+}
+
+.race-card__name {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin: 0;
+  color: var(--silver-100);
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
+}
+
+.race-card__stages {
+  margin: 0.2rem 0 0;
+  font-size: 0.78rem;
+  color: rgba(226, 232, 240, 0.75);
+}
+
+.race-card__corner-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid color-mix(in srgb, var(--race-accent) 50%, transparent);
+  color: var(--race-accent);
+  font-size: 1.1rem;
+}
+
+.race-card__body {
+  padding: 1.1rem 1.15rem 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.race-card__desc {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.race-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.race-stat {
+  padding: 0.55rem 0.45rem;
+  text-align: center;
+  background: rgba(4, 8, 18, 0.65);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: var(--radius-sm);
+}
+
+.race-stat__icon {
+  display: block;
+  margin: 0 auto 0.2rem;
+  color: var(--race-accent);
+  opacity: 0.95;
+}
+
+.race-stat__val {
+  display: block;
+  font-family: ui-monospace, monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--silver-100);
+}
+
+.race-stat__label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.race-card details {
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
+  margin: 0 -1.15rem -1rem;
+  padding: 0;
+}
+
+.race-card summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--race-accent);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  transition: background 0.2s;
+}
+
+.race-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.race-card summary:hover {
+  background: rgba(124, 58, 237, 0.08);
+}
+
+.race-card summary .chev {
+  transition: transform 0.25s ease;
+}
+
+.race-card details[open] summary .chev {
+  transform: rotate(180deg);
+}
+
+.race-card__details-inner {
+  padding: 0 1.15rem 1.15rem;
+  max-height: min(70vh, 28rem);
+  overflow-y: auto;
+}
+
+.evo-block {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.evo-block:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.evo-block__title {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  margin: 0 0 0.35rem;
+  color: var(--silver-100);
+  letter-spacing: 0.04em;
+}
+
+.evo-block__meta {
+  font-size: 0.72rem;
+  color: var(--purple-300);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.evo-block p {
+  margin: 0 0 0.5rem;
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.evo-block__label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(226, 232, 240, 0.65);
+  margin: 0.65rem 0 0.25rem;
+}
+
+.evo-block__label:first-of-type {
+  margin-top: 0;
+}
+
+.evo-block__text {
+  font-size: 0.82rem;
+  color: rgba(203, 213, 225, 0.92);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Accent per race */
+.race-card--iblis {
+  --race-accent: #f87171;
+}
+.race-card--elf {
+  --race-accent: #4ade80;
+}
+.race-card--insan {
+  --race-accent: #facc15;
+}
+.race-card--dev {
+  --race-accent: #c084fc;
+}
+.race-card--cuce {
+  --race-accent: #fb923c;
+}
+
+.wiki-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.wiki-top-actions .btn--ghost {
+  color: var(--silver-400);
+  font-size: 0.82rem;
+  padding: 0.45rem 0.85rem;
+}
+
+@media (max-width: 720px) {
+  .wiki-cats {
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .wiki-section-head {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .wiki-filters {
+    justify-content: flex-start;
+  }
+}
