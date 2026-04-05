@@ -38,7 +38,9 @@ async function loadUsers() {
     const res = await fetch(`${apiBase}/api/admin/users`, { credentials: "include" });
     const data = await res.json();
     if (!data.ok) {
-      alert(data.error || "Kullanıcılar yüklenemedi.");
+      // Sadece admin.html içindeki tablo boş kalmasın diye bir uyarı basabiliriz
+      // Ama yönlendirme yapmayalım, checkAuth zaten yönlendirmeyi yönetiyor
+      console.error("Kullanıcı yükleme hatası:", data.error);
       return;
     }
 
