@@ -119,14 +119,13 @@ async function requireAdmin(req, res, next) {
     if (!rows.length) return res.status(401).json({ ok: false, error: "Kullanıcı bulunamadı." });
 
     const dbRank = rows[0][C.rank] || "Üye";
-    const rank = dbRank.toLowerCase().trim();
-    const allowed = ["kurucu", "baş yönetici", "admin"];
+    const rank = dbRank.toLowerCase().trim().replace(/\s+/g, "");
+    const allowed = ["kurucu", "başyönetici", "admin"];
 
-    // Türkçe karakterler ve boşluklar için daha esnek kontrol
-    const isAllowed = allowed.some(r => rank === r || rank.includes(r.replace(" ", "")));
+    const isAllowed = allowed.some(r => rank === r || rank.includes(r));
 
     if (!isAllowed) {
-      return res.status(403).json({ ok: false, error: "Yetkiniz yok. Mevcut rütbeniz: " + dbRank });
+      return res.status(403).json({ ok: false, error: "Yetkiniz yok. Sunucudaki rütbeniz: [" + dbRank + "]" });
     }
     req.user = { ...payload, rank: dbRank };
     next();

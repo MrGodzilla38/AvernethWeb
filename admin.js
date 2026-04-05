@@ -11,13 +11,14 @@ async function checkAuth() {
       return false;
     }
 
-    const allowedRoles = ["kurucu", "baş yönetici", "admin"];
-    const rawRank = (data.rank || "Üye").toLowerCase().trim();
+    const allowedRoles = ["kurucu", "başyönetici", "admin"];
+    const rawRank = (data.rank || "Üye").toLowerCase().trim().replace(/\s+/g, "");
     
     // Daha esnek rank kontrolü
-    const isAllowed = allowedRoles.some(r => rawRank === r || rawRank.includes(r.replace(" ", "")));
+    const isAllowed = allowedRoles.some(r => rawRank === r || rawRank.includes(r));
 
     if (!isAllowed) {
+      console.warn("Yetki reddedildi. Client tarafındaki rütbe:", rawRank);
       window.location.href = "index.html";
       return false;
     }
