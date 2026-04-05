@@ -1,5 +1,7 @@
 const apiBase = document.body.hasAttribute("data-api-base") ? document.body.getAttribute("data-api-base") : "http://127.0.0.1:3847";
 
+let currentUserRank = "Üye";
+
 async function checkAuth() {
   try {
     const res = await fetch(`${apiBase}/api/auth/me`, { credentials: "include" });
@@ -10,11 +12,13 @@ async function checkAuth() {
     }
 
     const allowedRoles = ["kurucu", "baş yönetici", "admin"];
-    if (!data.rank || !allowedRoles.includes(data.rank.toLowerCase())) {
+    const rank = (data.rank || "Üye").toLowerCase().trim();
+    if (!allowedRoles.includes(rank)) {
       window.location.href = "index.html";
       return false;
     }
 
+    currentUserRank = rank;
     document.getElementById("user-info").innerHTML = `Giriş yapıldı: <span>${data.username}</span> (${data.rank})`;
     document.body.style.display = "block";
     return true;
@@ -37,16 +41,24 @@ async function loadUsers() {
     const tbody = document.getElementById("user-table-body");
     tbody.innerHTML = "";
     data.users.forEach(user => {
+      const targetRank = (user.rank || "Üye").toLowerCase().trim();
+      let editButton = "";
+
+      // Düzenleme butonu kısıtlaması: Admin, Kurucu ve Baş Yöneticiyi düzenleyemez
+      if (currentUserRank === "admin" && (targetRank === "kurucu" || targetRank === "baş yönetici")) {
+        editButton = `<button class="btn btn--outline btn--sm" disabled title="Yetkiniz yetersiz">Kısıtlı</button>`;
+      } else {
+        editButton = `<button class="btn btn--outline btn--sm" onclick="openEditModal(${user.id}, '${user.rank || 'Üye'}', ${user.balance || 0})">Düzenle</button>`;
+      }
+
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${user.id}</td>
         <td>${user.username}</td>
         <td>${user.email}</td>
-        <td><span class="rank-badge ${(user.rank || 'üye').toLowerCase()}">${user.rank || 'Üye'}</span></td>
+        <td><span class="rank-badge ${(user.rank || 'üye').toLowerCase().replace(/\s+/g, '-')}">${user.rank || 'Üye'}</span></td>
         <td>${user.balance || 0}</td>
-        <td>
-          <button class="btn btn--outline btn--sm" onclick="openEditModal(${user.id}, '${user.rank || 'Üye'}', ${user.balance || 0})">Düzenle</button>
-        </td>
+        <td>${editButton}</td>
       `;
       tbody.appendChild(tr);
     });

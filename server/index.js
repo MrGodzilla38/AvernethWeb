@@ -118,7 +118,7 @@ async function requireAdmin(req, res, next) {
 
     if (!rows.length) return res.status(401).json({ ok: false, error: "Kullanıcı bulunamadı." });
 
-    const rank = (rows[0][C.rank] || "Üye").toLowerCase();
+    const rank = (rows[0][C.rank] || "Üye").toLowerCase().trim();
     const allowed = ["kurucu", "baş yönetici", "admin"];
     if (!allowed.includes(rank)) {
       return res.status(403).json({ ok: false, error: "Yetkiniz yok." });
@@ -338,6 +338,23 @@ app.post("/api/admin/update-user", requireAdmin, async function (req, res) {
   try {
     const p = await getPool();
     const t = q(TABLE);
+
+    // Düzenlenen kullanıcının mevcut rankını kontrol et
+    const [targetRows] = await p.execute(
+      "SELECT " + q(C.rank) + " FROM " + t + " WHERE " + q(C.id) + " = ? LIMIT 1",
+      [id]
+    );
+
+    if (targetRows.length) {
+      const targetRank = (targetRows[0][C.rank] || "Üye").toLowerCase().trim();
+      const myRank = (req.user.rank || "Üye").toLowerCase().trim();
+
+      // Admin ise ve hedef Kurucu veya Baş Yönetici ise engelle
+      if (myRank === "admin" && (targetRank === "kurucu" || targetRank === "baş yönetici")) {
+        return res.status(403).json({ ok: false, error: "Kurucu veya Baş Yönetici rollerini değiştiremezsiniz." });
+      }
+    }
+
     await p.execute(
       "UPDATE " + t + " SET " + q(C.rank) + " = ?, " + q(C.balance) + " = ? WHERE " + q(C.id) + " = ?",
       [rank, balance, id]
