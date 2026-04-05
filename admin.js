@@ -12,13 +12,17 @@ async function checkAuth() {
     }
 
     const allowedRoles = ["kurucu", "baş yönetici", "admin"];
-    const rank = (data.rank || "Üye").toLowerCase().trim();
-    if (!allowedRoles.includes(rank)) {
+    const rawRank = (data.rank || "Üye").toLowerCase().trim();
+    
+    // Daha esnek rank kontrolü
+    const isAllowed = allowedRoles.some(r => rawRank === r || rawRank.includes(r.replace(" ", "")));
+
+    if (!isAllowed) {
       window.location.href = "index.html";
       return false;
     }
 
-    currentUserRank = rank;
+    currentUserRank = rawRank;
     document.getElementById("user-info").innerHTML = `Giriş yapıldı: <span>${data.username}</span> (${data.rank})`;
     document.body.style.display = "block";
     return true;
@@ -44,11 +48,25 @@ async function loadUsers() {
       const targetRank = (user.rank || "Üye").toLowerCase().trim();
       let editButton = "";
 
-      // Düzenleme butonu kısıtlaması: Admin, Kurucu ve Baş Yöneticiyi düzenleyemez
-      if (currentUserRank === "admin" && (targetRank === "kurucu" || targetRank === "baş yönetici")) {
-        editButton = `<button class="btn btn--outline btn--sm" disabled title="Yetkiniz yetersiz">Kısıtlı</button>`;
-      } else {
+      // Düzenleme kısıtlaması
+      const isTargetHigh = targetRank === "kurucu" || targetRank === "baş yönetici" || targetRank.includes("başyönetici");
+      const isTargetAdmin = targetRank === "admin";
+      
+      const isMeHigh = currentUserRank === "kurucu" || currentUserRank === "baş yönetici" || currentUserRank.includes("başyönetici");
+
+      if (currentUserRank === "admin") {
+        // Admin; Kurucu, Baş Yönetici ve diğer Adminleri düzenleyemez
+        if (isTargetHigh || isTargetAdmin) {
+          editButton = `<button class="btn btn--outline btn--sm" disabled title="Bu yetki düzeyini düzenleyemezsiniz">Kısıtlı</button>`;
+        } else {
+          editButton = `<button class="btn btn--outline btn--sm" onclick="openEditModal(${user.id}, '${user.rank || 'Üye'}', ${user.balance || 0})">Düzenle</button>`;
+        }
+      } else if (isMeHigh) {
+        // Kurucu ve Baş Yönetici herkesi düzenleyebilir
         editButton = `<button class="btn btn--outline btn--sm" onclick="openEditModal(${user.id}, '${user.rank || 'Üye'}', ${user.balance || 0})">Düzenle</button>`;
+      } else {
+        // Diğer durumlar (normalde buraya girmemeli)
+        editButton = `<button class="btn btn--outline btn--sm" disabled>Yetki Yok</button>`;
       }
 
       const tr = document.createElement("tr");

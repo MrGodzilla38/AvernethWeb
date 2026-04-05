@@ -118,12 +118,17 @@ async function requireAdmin(req, res, next) {
 
     if (!rows.length) return res.status(401).json({ ok: false, error: "Kullanıcı bulunamadı." });
 
-    const rank = (rows[0][C.rank] || "Üye").toLowerCase().trim();
+    const dbRank = rows[0][C.rank] || "Üye";
+    const rank = dbRank.toLowerCase().trim();
     const allowed = ["kurucu", "baş yönetici", "admin"];
-    if (!allowed.includes(rank)) {
-      return res.status(403).json({ ok: false, error: "Yetkiniz yok." });
+
+    // Türkçe karakterler ve boşluklar için daha esnek kontrol
+    const isAllowed = allowed.some(r => rank === r || rank.includes(r.replace(" ", "")));
+
+    if (!isAllowed) {
+      return res.status(403).json({ ok: false, error: "Yetkiniz yok. Mevcut rütbeniz: " + dbRank });
     }
-    req.user = { ...payload, rank: rows[0][C.rank] };
+    req.user = { ...payload, rank: dbRank };
     next();
   } catch (_e) {
     return res.status(401).json({ ok: false, error: "Geçersiz oturum." });
@@ -349,9 +354,14 @@ app.post("/api/admin/update-user", requireAdmin, async function (req, res) {
       const targetRank = (targetRows[0][C.rank] || "Üye").toLowerCase().trim();
       const myRank = (req.user.rank || "Üye").toLowerCase().trim();
 
-      // Admin ise ve hedef Kurucu veya Baş Yönetici ise engelle
-      if (myRank === "admin" && (targetRank === "kurucu" || targetRank === "baş yönetici")) {
-        return res.status(403).json({ ok: false, error: "Kurucu veya Baş Yönetici rollerini değiştiremezsiniz." });
+      // Baş Yönetici ve Kurucu dokunulmazdır
+      const isHighLevel = targetRank === "kurucu" || targetRank === "baş yönetici" || targetRank.includes("başyönetici");
+
+      if (myRank === "admin") {
+        // Adminler Kurucu, Baş Yönetici ve diğer Adminleri düzenleyemez
+        if (isHighLevel || targetRank === "admin") {
+          return res.status(403).json({ ok: false, error: "Yetkiniz bu kullanıcının bilgilerini değiştirmeye yetmiyor." });
+        }
       }
     }
 
