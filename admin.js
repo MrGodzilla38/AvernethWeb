@@ -11,14 +11,17 @@ async function checkAuth() {
       return false;
     }
 
-    const allowedRoles = ["kurucu", "başyönetici", "admin"];
-    const rawRank = (data.rank || "Üye").toLowerCase().trim().replace(/\s+/g, "");
+    const allowedRoles = ["kurucu", "basyonetici", "admin"];
+    const rawRank = (data.rank || "Uye").toLowerCase()
+      .trim()
+      .replace(/ş/g, 's').replace(/ç/g, 'c').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ı/g, 'i')
+      .replace(/\s+/g, "");
     
     // Daha esnek rank kontrolü
     const isAllowed = allowedRoles.some(r => rawRank === r || rawRank.includes(r));
 
     if (!isAllowed) {
-      console.warn("Yetki reddedildi. Client tarafındaki rütbe:", rawRank);
+      console.warn("Yetki reddedildi. Client tarafındaki rutbe:", rawRank);
       window.location.href = "index.html";
       return false;
     }
@@ -48,27 +51,31 @@ async function loadUsers() {
     const tbody = document.getElementById("user-table-body");
     tbody.innerHTML = "";
     data.users.forEach(user => {
-      const targetRank = (user.rank || "Üye").toLowerCase().trim();
+      const targetRank = (user.rank || "Uye").toLowerCase()
+        .trim()
+        .replace(/ş/g, 's').replace(/ç/g, 'c').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ı/g, 'i')
+        .replace(/\s+/g, "");
+
       let editButton = "";
 
-      // Düzenleme kısıtlaması
-      const isTargetHigh = targetRank === "kurucu" || targetRank === "baş yönetici" || targetRank.includes("başyönetici");
+      // Duzenleme kisitlamasi
+      const isTargetHigh = targetRank === "kurucu" || targetRank === "basyonetici";
       const isTargetAdmin = targetRank === "admin";
       
-      const isMeHigh = currentUserRank === "kurucu" || currentUserRank === "baş yönetici" || currentUserRank.includes("başyönetici");
+      const isMeHigh = currentUserRank === "kurucu" || currentUserRank === "basyonetici";
 
       if (currentUserRank === "admin") {
-        // Admin; Kurucu, Baş Yönetici ve diğer Adminleri düzenleyemez
+        // Admin; Kurucu, Basyonetici ve diger Adminleri duzenleyemez
         if (isTargetHigh || isTargetAdmin) {
-          editButton = `<button class="btn btn--outline btn--sm" disabled title="Bu yetki düzeyini düzenleyemezsiniz">Kısıtlı</button>`;
+          editButton = `<button class="btn btn--outline btn--sm" disabled title="Bu yetki duzeyini duzenleyemezsiniz">Kisitli</button>`;
         } else {
-          editButton = `<button class="btn btn--outline btn--sm" onclick="openEditModal(${user.id}, '${user.rank || 'Üye'}', ${user.balance || 0})">Düzenle</button>`;
+          editButton = `<button class="btn btn--outline btn--sm" onclick="openEditModal(${user.id}, '${user.rank || 'Uye'}', ${user.balance || 0})">Duzenle</button>`;
         }
       } else if (isMeHigh) {
-        // Kurucu ve Baş Yönetici herkesi düzenleyebilir
-        editButton = `<button class="btn btn--outline btn--sm" onclick="openEditModal(${user.id}, '${user.rank || 'Üye'}', ${user.balance || 0})">Düzenle</button>`;
+        // Kurucu ve Basyonetici herkesi duzenleyebilir
+        editButton = `<button class="btn btn--outline btn--sm" onclick="openEditModal(${user.id}, '${user.rank || 'Uye'}', ${user.balance || 0})">Duzenle</button>`;
       } else {
-        // Diğer durumlar (normalde buraya girmemeli)
+        // Diger durumlar (normalde buraya girmemeli)
         editButton = `<button class="btn btn--outline btn--sm" disabled>Yetki Yok</button>`;
       }
 
@@ -77,7 +84,9 @@ async function loadUsers() {
         <td>${user.id}</td>
         <td>${user.username}</td>
         <td>${user.email}</td>
-        <td><span class="rank-badge ${(user.rank || 'üye').toLowerCase().replace(/\s+/g, '-')}">${user.rank || 'Üye'}</span></td>
+        <td><span class="rank-badge ${(user.rank || 'uye').toLowerCase()
+          .replace(/ş/g, 's').replace(/ç/g, 'c').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ı/g, 'i')
+          .replace(/\s+/g, '-')}">${user.rank || 'Uye'}</span></td>
         <td>${user.balance || 0}</td>
         <td>${editButton}</td>
       `;

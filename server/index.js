@@ -118,14 +118,18 @@ async function requireAdmin(req, res, next) {
 
     if (!rows.length) return res.status(401).json({ ok: false, error: "Kullanıcı bulunamadı." });
 
-    const dbRank = rows[0][C.rank] || "Üye";
-    const rank = dbRank.toLowerCase().trim().replace(/\s+/g, "");
-    const allowed = ["kurucu", "başyönetici", "admin"];
+    const dbRank = rows[0][C.rank] || "Uye";
+    const rank = dbRank.toLowerCase()
+      .trim()
+      .replace(/ş/g, 's').replace(/ç/g, 'c').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ı/g, 'i')
+      .replace(/\s+/g, "");
+    
+    const allowed = ["kurucu", "basyonetici", "admin"];
 
     const isAllowed = allowed.some(r => rank === r || rank.includes(r));
 
     if (!isAllowed) {
-      return res.status(403).json({ ok: false, error: "Yetkiniz yok. Sunucudaki rütbeniz: [" + dbRank + "]" });
+      return res.status(403).json({ ok: false, error: "Yetkiniz yok. Sunucudaki rutbeniz: [" + dbRank + "]" });
     }
     req.user = { ...payload, rank: dbRank };
     next();
@@ -350,16 +354,23 @@ app.post("/api/admin/update-user", requireAdmin, async function (req, res) {
     );
 
     if (targetRows.length) {
-      const targetRank = (targetRows[0][C.rank] || "Üye").toLowerCase().trim();
-      const myRank = (req.user.rank || "Üye").toLowerCase().trim();
+      const targetRank = (targetRows[0][C.rank] || "Uye").toLowerCase()
+        .trim()
+        .replace(/ş/g, 's').replace(/ç/g, 'c').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ı/g, 'i')
+        .replace(/\s+/g, "");
 
-      // Baş Yönetici ve Kurucu dokunulmazdır
-      const isHighLevel = targetRank === "kurucu" || targetRank === "baş yönetici" || targetRank.includes("başyönetici");
+      const myRank = (req.user.rank || "Uye").toLowerCase()
+        .trim()
+        .replace(/ş/g, 's').replace(/ç/g, 'c').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ı/g, 'i')
+        .replace(/\s+/g, "");
+
+      // Basyonetici ve Kurucu dokunulmazdir
+      const isHighLevel = targetRank === "kurucu" || targetRank === "basyonetici";
 
       if (myRank === "admin") {
-        // Adminler Kurucu, Baş Yönetici ve diğer Adminleri düzenleyemez
+        // Adminler Kurucu, Basyonetici ve diger Adminleri duzenleyemez
         if (isHighLevel || targetRank === "admin") {
-          return res.status(403).json({ ok: false, error: "Yetkiniz bu kullanıcının bilgilerini değiştirmeye yetmiyor." });
+          return res.status(403).json({ ok: false, error: "Yetkiniz bu kullanicinin bilgilerini degistirmeye yetmiyor." });
         }
       }
     }

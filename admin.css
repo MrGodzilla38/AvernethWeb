@@ -82,11 +82,11 @@ body {
   text-transform: uppercase;
 }
 
-.rank-badge.üye { background: rgba(148, 163, 184, 0.15); color: var(--silver-400); }
+.rank-badge.uye { background: rgba(148, 163, 184, 0.15); color: var(--silver-400); }
 .rank-badge.rehber { background: rgba(16, 185, 129, 0.15); color: #10b981; }
-.rank-badge.moderatör { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+.rank-badge.moderator { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
 .rank-badge.admin { background: rgba(124, 58, 237, 0.15); color: var(--purple-300); }
-.rank-badge.baş-yönetici { background: rgba(153, 27, 27, 0.2); color: #b91c1c; }
+.rank-badge.bas-yonetici { background: rgba(153, 27, 27, 0.2); color: #b91c1c; }
 .rank-badge.kurucu { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
 
 /* Modal */
