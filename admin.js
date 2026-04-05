@@ -9,7 +9,7 @@ async function checkAuth() {
       return false;
     }
 
-    const allowedRoles = ["kurucu", "admin", "moderatör", "rehber"];
+    const allowedRoles = ["kurucu", "baş yönetici", "admin"];
     if (!data.rank || !allowedRoles.includes(data.rank.toLowerCase())) {
       window.location.href = "index.html";
       return false;

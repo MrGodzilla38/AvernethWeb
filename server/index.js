@@ -119,7 +119,7 @@ async function requireAdmin(req, res, next) {
     if (!rows.length) return res.status(401).json({ ok: false, error: "Kullanıcı bulunamadı." });
 
     const rank = (rows[0][C.rank] || "Üye").toLowerCase();
-    const allowed = ["kurucu", "admin", "moderatör", "rehber"];
+    const allowed = ["kurucu", "baş yönetici", "admin"];
     if (!allowed.includes(rank)) {
       return res.status(403).json({ ok: false, error: "Yetkiniz yok." });
     }
