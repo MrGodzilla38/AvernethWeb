@@ -86,8 +86,8 @@ body {
 .rank-badge.rehber { background: rgba(16, 185, 129, 0.15); color: #10b981; }
 .rank-badge.moderator { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
 .rank-badge.admin { background: rgba(124, 58, 237, 0.15); color: var(--purple-300); }
-.rank-badge.bas-yonetici { background: rgba(153, 27, 27, 0.2); color: #b91c1c; }
-.rank-badge.kurucu { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+.rank-badge.bas-yonetici { background: rgba(185, 28, 28, 0.15); color: #b91c1c; }
+.rank-badge.kurucu { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
 
 /* Modal */
 .modal {

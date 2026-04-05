@@ -18,15 +18,15 @@ async function checkAuth() {
       .replace(/\s+/g, "");
     
     // Daha esnek rank kontrolü
-    const isAllowed = allowedRoles.some(r => rawRank === r || rawRank.includes(r));
+    const matchedRole = allowedRoles.find(r => rawRank === r || rawRank.includes(r));
 
-    if (!isAllowed) {
+    if (!matchedRole) {
       console.warn("Yetki reddedildi. Client tarafındaki rutbe:", rawRank);
       window.location.href = "index.html";
       return false;
     }
 
-    currentUserRank = rawRank;
+    currentUserRank = matchedRole;
     document.getElementById("user-info").innerHTML = `Giriş yapıldı: <span>${data.username}</span> (${data.rank})`;
     document.body.style.display = "block";
     return true;
@@ -51,7 +51,7 @@ async function loadUsers() {
     const tbody = document.getElementById("user-table-body");
     tbody.innerHTML = "";
     data.users.forEach(user => {
-      const targetRank = (user.rank || "Uye").toLowerCase()
+      const targetRankClean = (user.rank || "Uye").toLowerCase()
         .trim()
         .replace(/ş/g, 's').replace(/ç/g, 'c').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ı/g, 'i')
         .replace(/\s+/g, "");
@@ -59,8 +59,8 @@ async function loadUsers() {
       let editButton = "";
 
       // Duzenleme kisitlamasi
-      const isTargetHigh = targetRank === "kurucu" || targetRank === "basyonetici";
-      const isTargetAdmin = targetRank === "admin";
+      const isTargetHigh = targetRankClean === "kurucu" || targetRankClean === "basyonetici";
+      const isTargetAdmin = targetRankClean === "admin";
       
       const isMeHigh = currentUserRank === "kurucu" || currentUserRank === "basyonetici";
 
@@ -84,9 +84,7 @@ async function loadUsers() {
         <td>${user.id}</td>
         <td>${user.username}</td>
         <td>${user.email}</td>
-        <td><span class="rank-badge ${(user.rank || 'uye').toLowerCase()
-          .replace(/ş/g, 's').replace(/ç/g, 'c').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ı/g, 'i')
-          .replace(/\s+/g, '-')}">${user.rank || 'Uye'}</span></td>
+        <td><span class="rank-badge ${targetRankClean === 'basyonetici' ? 'bas-yonetici' : (targetRankClean === 'moderator' ? 'moderator' : (targetRankClean === 'uye' ? 'uye' : targetRankClean))}">${user.rank || 'Üye'}</span></td>
         <td>${user.balance || 0}</td>
         <td>${editButton}</td>
       `;
