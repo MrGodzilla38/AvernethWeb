@@ -1,5 +1,9 @@
 /* ADMIN PANEL STYLES — dark epic fantasy (navy, purple, silver) */
 
+body {
+  display: none;
+}
+
 .admin-main {
   padding: 3rem 0;
   min-height: calc(100vh - 80px);

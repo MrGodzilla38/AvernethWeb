@@ -6,20 +6,22 @@ async function checkAuth() {
     const data = await res.json();
     if (!data.loggedIn) {
       window.location.href = "index.html";
-      return;
+      return false;
     }
 
     const allowedRoles = ["kurucu", "admin", "moderatör", "rehber"];
     if (!data.rank || !allowedRoles.includes(data.rank.toLowerCase())) {
-      alert("Bu sayfaya erişim yetkiniz yok.");
       window.location.href = "index.html";
-      return;
+      return false;
     }
 
     document.getElementById("user-info").innerHTML = `Giriş yapıldı: <span>${data.username}</span> (${data.rank})`;
+    document.body.style.display = "block";
+    return true;
   } catch (err) {
     console.error("Yetki kontrolü hatası:", err);
     window.location.href = "index.html";
+    return false;
   }
 }
 
@@ -103,5 +105,11 @@ document.getElementById("logout-btn").onclick = async () => {
 };
 
 // Başlat
-checkAuth();
-loadUsers();
+async function init() {
+  const isAuth = await checkAuth();
+  if (isAuth) {
+    loadUsers();
+  }
+}
+
+init();
