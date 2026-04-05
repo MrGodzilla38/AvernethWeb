@@ -1,281 +1,94 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="AVERNETH — Admin Paneli." />
-  <title>Admin Paneli — AVERNETH</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="auth.css" />
-  <style>
-    .admin-link {
-      border: 1px solid rgba(248, 113, 113, 0.2) !important;
-      color: #f87171 !important;
-    }
-    .admin-link:hover {
-      background: rgba(248, 113, 113, 0.1) !important;
-    }
-    .admin-table th {
-      background: rgba(248, 113, 113, 0.05) !important;
-    }
-    .admin-btn-edit {
-      padding: 0.4rem 0.8rem;
-      font-size: 0.75rem;
-      border-radius: var(--radius-sm);
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      color: var(--silver-400);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .admin-btn-edit:hover {
-      border-color: var(--purple-500);
-      color: var(--silver-100);
-    }
-    .admin-input-small {
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      color: var(--silver-100);
-      padding: 0.3rem 0.5rem;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      width: 100px;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Paneli — Averneth</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="admin.css">
 </head>
-<body class="auth-page" data-api-base="">
-  <div class="noise" aria-hidden="true"></div>
-
+<body data-api-base="">
+  <div class="noise"></div>
+  
   <header class="topbar">
     <div class="container topbar__inner">
-      <a class="brand" href="index.html#anasayfa">
-        <img class="brand__logo" src="assets/averneth-logo.png" width="160" height="160" alt="" decoding="async" />
-        <span class="brand__text">Averneth</span>
+      <a href="index.html" class="brand">
+        <img src="assets/averneth-logo.png" alt="Averneth" class="brand__logo">
+        <span class="brand__text">AVERNETH</span>
       </a>
-      <nav class="nav" aria-label="Ana menü">
-        <button type="button" class="nav__toggle" aria-expanded="false" aria-controls="nav-menu">Menü</button>
-        <ul id="nav-menu" class="nav__list">
-          <li><a class="nav__link" href="index.html#anasayfa">Ana Sayfa</a></li>
-          <li><a class="nav__link" href="index.html#haberler">Haberler</a></li>
-          <li><a class="nav__link" href="index.html#magaza">Mağaza</a></li>
-          <li><a class="nav__link" href="index.html#forum">Forum</a></li>
-          <li><a class="nav__link" href="wiki.html">Wiki</a></li>
-          <li><a class="nav__link" href="index.html#yardim">Yardım</a></li>
-          <li><a class="nav__link" href="index.html#destek">Destek</a></li>
-          <li><a class="nav__link" href="index.html#yetkili-basvuru">Yetkili Başvuru</a></li>
+      <nav class="nav">
+        <ul class="nav__list">
+          <li><a href="index.html" class="nav__link">Ana Sayfa</a></li>
+          <li><a href="admin.html" class="nav__link nav__link--active">Admin Paneli</a></li>
         </ul>
       </nav>
-      <div class="topbar__actions wiki-top-actions">
-        <button type="button" class="ip-pill" data-copy-ip title="Adresi kopyala" aria-label="Sunucu IP kopyala">
-          <svg class="ip-pill__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M4 17V7a2 2 0 012-2h6l4 4v8a2 2 0 01-2 2H6a2 2 0 01-2-2z" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M10 5v4h4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-            <path d="M8 13h.01M12 13h.01M16 13h.01M8 16h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-          <span class="ip-pill__text" data-server-ip>play.averneth.net</span>
-        </button>
-        <a href="auth.html" class="header-profile" id="header-profile" title="Hesabım">
-          <img src="assets/averneth-logo.png" alt="Profil" class="header-profile__img" id="header-profile-img">
-        </a>
+      <div class="topbar__actions">
+        <div id="user-info" class="user-info"></div>
+        <button id="logout-btn" class="btn btn--ghost btn--sm">Çıkış Yap</button>
       </div>
     </div>
   </header>
 
-  <main class="auth-main">
-    <div class="container dashboard">
-      <aside class="dashboard__sidebar">
-        <div class="profile-card">
-          <div class="profile-card__avatar">
-            <img src="assets/averneth-logo.png" alt="Avatar" id="user-avatar-img">
-          </div>
-          <div class="profile-card__info">
-            <h3 class="profile-card__name" id="user-display-name">Yükleniyor...</h3>
-            <span class="profile-card__rank" id="user-display-rank">...</span>
-          </div>
+  <main class="admin-main">
+    <div class="container">
+      <div class="admin-header">
+        <h1 class="admin-title">Kullanıcı Yönetimi</h1>
+        <p class="admin-subtitle">Tüm kayıtlı kullanıcıları buradan yönetebilirsiniz.</p>
+      </div>
+
+      <div class="admin-card">
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Kullanıcı Adı</th>
+                <th>E-posta</th>
+                <th>Rank</th>
+                <th>Balance</th>
+                <th>İşlemler</th>
+              </tr>
+            </thead>
+            <tbody id="user-table-body">
+              <!-- Veriler JS ile buraya gelecek -->
+            </tbody>
+          </table>
         </div>
-
-        <nav class="dashboard-nav">
-          <div class="dashboard-nav__group">
-            <h4 class="dashboard-nav__title">Yönetim</h4>
-            <ul class="dashboard-nav__list">
-              <li><a href="admin.html" class="dashboard-nav__link active admin-link"><span class="icon">🛡️</span> Kullanıcılar</a></li>
-              <li><a href="auth.html" class="dashboard-nav__link"><span class="icon">👤</span> Profile Dön</a></li>
-            </ul>
-          </div>
-        </nav>
-      </aside>
-
-      <div class="dashboard__content">
-        <section class="dashboard-section">
-          <h3 class="dashboard-section__title">Kullanıcı Yönetimi</h3>
-          <div class="table-responsive">
-            <table class="dashboard-table admin-table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>OYUNCU ADI</th>
-                  <th>E-POSTA</th>
-                  <th>RÜTBE</th>
-                  <th>BAKİYE</th>
-                  <th>İŞLEMLER</th>
-                </tr>
-              </thead>
-              <tbody id="admin-user-list">
-                <tr><td colspan="6" class="empty-table">Yükleniyor...</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
       </div>
     </div>
   </main>
 
-  <footer class="footer">
-    <div class="container footer__grid">
-      <div>
-        <h3 class="footer__heading">Admin</h3>
-        <p class="footer__text">Kullanıcı rütbelerini ve bakiyelerini buradan yönetebilirsiniz.</p>
-        <p class="footer__copy">AVERNETH. © <span id="year"></span></p>
-      </div>
+  <!-- Düzenleme Modalı -->
+  <div id="edit-modal" class="modal">
+    <div class="modal-content">
+      <h2 class="modal-title">Kullanıcı Düzenle</h2>
+      <form id="edit-user-form">
+        <input type="hidden" id="edit-user-id">
+        <div class="form-group">
+          <label for="edit-user-rank">Rank</label>
+          <select id="edit-user-rank" class="form-input">
+            <option value="Üye">Üye</option>
+            <option value="Rehber">Rehber</option>
+            <option value="Moderatör">Moderatör</option>
+            <option value="Admin">Admin</option>
+            <option value="Kurucu">Kurucu</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="edit-user-balance">Balance</label>
+          <input type="number" id="edit-user-balance" class="form-input" step="0.01">
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn--ghost" onclick="closeModal()">İptal</button>
+          <button type="submit" class="btn btn--primary">Kaydet</button>
+        </div>
+      </form>
     </div>
-  </footer>
+  </div>
 
-  <script src="script.js"></script>
-  <script>
-    (function () {
-      "use strict";
-
-      function $(id) { return document.getElementById(id); }
-
-      function getApiUrl(path) {
-        var el = document.body;
-        var base = (el && el.getAttribute("data-api-base")) || "";
-        base = base.replace(/\/$/, "");
-        if (!path.startsWith("/")) path = "/" + path;
-        return base + path;
-      }
-
-      function escapeHtml(s) {
-        if (!s) return "";
-        return s.toString()
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#039;");
-      }
-
-      function refreshAdminUI() {
-        fetch(getApiUrl("/api/auth/me"), { credentials: "include" })
-          .then(function (r) { return r.json(); })
-          .then(function (data) {
-            if (!data || !data.loggedIn) {
-              window.location.href = "auth.html";
-              return;
-            }
-
-            var rank = (data.rank || "").toLowerCase();
-            if (rank !== "kurucu" && rank !== "admin") {
-              window.location.href = "auth.html";
-              return;
-            }
-
-            if ($("user-display-name")) $("user-display-name").textContent = data.username;
-            if ($("user-display-rank")) {
-                $("user-display-rank").textContent = data.rank;
-                var rLower = data.rank.toLowerCase();
-                var cls = "rank--uye";
-                if (rLower === "kurucu") cls = "rank--kurucu";
-                else if (rLower === "admin") cls = "rank--admin";
-                $("user-display-rank").className = "profile-card__rank " + cls;
-            }
-            if ($("user-avatar-img")) {
-              $("user-avatar-img").src = "https://mc-heads.net/avatar/" + data.username + "/64";
-            }
-            if ($("header-profile-img")) {
-              $("header-profile-img").src = "https://mc-heads.net/avatar/" + data.username + "/32";
-            }
-
-            loadUsers();
-          })
-          .catch(function () {
-            window.location.href = "auth.html";
-          });
-      }
-
-      function loadUsers() {
-        var list = $("admin-user-list");
-        if (!list) return;
-
-        fetch(getApiUrl("/api/admin/users"), { credentials: "include" })
-          .then(function (r) { return r.json(); })
-          .then(function (data) {
-            if (data && data.ok && data.users) {
-              list.innerHTML = "";
-              data.users.forEach(function (u) {
-                var tr = document.createElement("tr");
-                tr.innerHTML =
-                  "<td>" + (u.ai || u.id) + "</td>" +
-                  "<td><strong>" + escapeHtml(u.last_name || u.username) + "</strong></td>" +
-                  "<td>" + escapeHtml(u.email || "-") + "</td>" +
-                  '<td><input type="text" class="admin-input-small rank-input" value="' + (u.rank || "Üye") + '"></td>' +
-                  '<td><input type="number" class="admin-input-small balance-input" value="' + (u.balance || "0.00") + '"></td>' +
-                  '<td><button class="admin-btn-edit update-user-btn" data-id="' + (u.ai || u.id) + '">Güncelle</button></td>';
-                list.appendChild(tr);
-              });
-
-              list.querySelectorAll(".update-user-btn").forEach(function (btn) {
-                btn.addEventListener("click", function () {
-                  var id = btn.getAttribute("data-id");
-                  var row = btn.closest("tr");
-                  var rank = row.querySelector(".rank-input").value;
-                  var balance = row.querySelector(".balance-input").value;
-                  updateUser(id, rank, balance, btn);
-                });
-              });
-            } else {
-              list.innerHTML = '<tr><td colspan="6" class="empty-table">Kullanıcılar yüklenemedi.</td></tr>';
-            }
-          });
-      }
-
-      function updateUser(userId, rank, balance, btn) {
-        var oldText = btn.textContent;
-        btn.disabled = true;
-        btn.textContent = "...";
-
-        fetch(getApiUrl("/api/admin/update-user"), {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({ userId: userId, rank: rank, balance: balance })
-        })
-          .then(function (r) { return r.json(); })
-          .then(function (data) {
-            if (data && data.ok) {
-              alert("Başarıyla güncellendi.");
-            } else {
-              alert("Hata: " + (data.error || "Bilinmeyen hata"));
-            }
-          })
-          .catch(function () {
-            alert("Sunucu hatası.");
-          })
-          .finally(function () {
-            btn.disabled = false;
-            btn.textContent = oldText;
-          });
-      }
-
-      refreshAdminUI();
-
-      var yearEl = $("year");
-      if (yearEl) yearEl.textContent = new Date().getFullYear().toString();
-
-    })();
-  </script>
+  <script src="admin.js"></script>
 </body>
 </html>

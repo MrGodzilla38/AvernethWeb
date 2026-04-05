@@ -23,6 +23,8 @@ const C = {
   address: process.env.NLOGIN_COL_ADDRESS || "last_ip",
   lastlogin: process.env.NLOGIN_COL_LASTLOGIN || "last_seen",
   email: process.env.NLOGIN_COL_EMAIL || "email",
+  rank: process.env.NLOGIN_COL_RANK || "rank",
+  balance: process.env.NLOGIN_COL_BALANCE || "balance",
 };
 
 function q(ident) {
@@ -99,6 +101,33 @@ function requireJwtSecret(req, res, next) {
     });
   }
   next();
+}
+
+async function requireAdmin(req, res, next) {
+  const raw = req.cookies.averneth_session;
+  if (!raw) return res.status(401).json({ ok: false, error: "Yetkisiz erişim." });
+
+  try {
+    const payload = jwt.verify(raw, JWT_SECRET);
+    const p = await getPool();
+    const t = q(TABLE);
+    const [rows] = await p.execute(
+      "SELECT " + q(C.rank) + " FROM " + t + " WHERE LOWER(" + q(C.name) + ") = ? LIMIT 1",
+      [payload.sub]
+    );
+
+    if (!rows.length) return res.status(401).json({ ok: false, error: "Kullanıcı bulunamadı." });
+
+    const rank = (rows[0][C.rank] || "Üye").toLowerCase();
+    const allowed = ["kurucu", "admin", "moderatör", "rehber"];
+    if (!allowed.includes(rank)) {
+      return res.status(403).json({ ok: false, error: "Yetkiniz yok." });
+    }
+    req.user = { ...payload, rank: rows[0][C.rank] };
+    next();
+  } catch (_e) {
+    return res.status(401).json({ ok: false, error: "Geçersiz oturum." });
+  }
 }
 
 app.post("/api/auth/register", requireJwtSecret, async function (req, res) {
@@ -264,18 +293,59 @@ app.post("/api/auth/logout", function (req, res) {
   res.json({ ok: true });
 });
 
-app.get("/api/auth/me", requireJwtSecret, function (req, res) {
+app.get("/api/auth/me", requireJwtSecret, async function (req, res) {
   const raw = req.cookies.averneth_session;
   if (!raw) return res.json({ ok: true, loggedIn: false });
   try {
     const payload = jwt.verify(raw, JWT_SECRET);
+    const p = await getPool();
+    const t = q(TABLE);
+    const [rows] = await p.execute(
+      "SELECT " + q(C.rank) + " FROM " + t + " WHERE LOWER(" + q(C.name) + ") = ? LIMIT 1",
+      [payload.sub]
+    );
+    const rank = rows.length ? rows[0][C.rank] : "Üye";
+
     return res.json({
       ok: true,
       loggedIn: true,
       username: payload.rn || payload.sub,
+      rank: rank
     });
   } catch (_e) {
     return res.json({ ok: true, loggedIn: false });
+  }
+});
+
+app.get("/api/admin/users", requireAdmin, async function (req, res) {
+  try {
+    const p = await getPool();
+    const t = q(TABLE);
+    const [rows] = await p.execute(
+      "SELECT " + q(C.id) + " as id, " + q(C.name) + " as username, " + q(C.email) + " as email, " + q(C.rank) + " as rank, " + q(C.balance) + " as balance FROM " + t
+    );
+    return res.json({ ok: true, users: rows });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ ok: false, error: "Kullanıcılar yüklenemedi." });
+  }
+});
+
+app.post("/api/admin/update-user", requireAdmin, async function (req, res) {
+  const { id, rank, balance } = req.body;
+  if (!id) return res.status(400).json({ ok: false, error: "ID gerekli." });
+
+  try {
+    const p = await getPool();
+    const t = q(TABLE);
+    await p.execute(
+      "UPDATE " + t + " SET " + q(C.rank) + " = ?, " + q(C.balance) + " = ? WHERE " + q(C.id) + " = ?",
+      [rank, balance, id]
+    );
+    return res.json({ ok: true, message: "Kullanıcı güncellendi." });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ ok: false, error: "Kullanıcı güncellenemedi." });
   }
 });
 

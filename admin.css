@@ -1,0 +1,166 @@
+/* ADMIN PANEL STYLES — dark epic fantasy (navy, purple, silver) */
+
+.admin-main {
+  padding: 3rem 0;
+  min-height: calc(100vh - 80px);
+}
+
+.admin-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.admin-title {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--silver-100);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+}
+
+.admin-subtitle {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.admin-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-table th {
+  font-family: var(--font-display);
+  color: var(--purple-300);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.admin-table td {
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table tr:hover {
+  background: rgba(124, 58, 237, 0.05);
+}
+
+.rank-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.rank-badge.üye { background: rgba(148, 163, 184, 0.15); color: var(--silver-400); }
+.rank-badge.rehber { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+.rank-badge.moderatör { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+.rank-badge.admin { background: rgba(124, 58, 237, 0.15); color: var(--purple-300); }
+.rank-badge.kurucu { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(6, 10, 18, 0.85);
+  backdrop-filter: blur(8px);
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+  width: min(500px, 95vw);
+  box-shadow: 0 0 50px rgba(124, 58, 237, 0.2);
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  color: var(--silver-100);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--purple-500);
+  box-shadow: 0 0 15px rgba(124, 58, 237, 0.2);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+/* User Info in Topbar */
+.user-info {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-right: 1rem;
+}
+
+.user-info span {
+  color: var(--silver-100);
+  font-weight: 600;
+}
