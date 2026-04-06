@@ -84,7 +84,7 @@ async function loadUsers() {
         <td>${user.id}</td>
         <td>${user.username}</td>
         <td>${user.email}</td>
-        <td><span class="rank-badge ${targetRankClean === 'basyonetici' ? 'bas-yonetici' : (targetRankClean === 'moderator' ? 'moderator' : (targetRankClean === 'uye' ? 'uye' : targetRankClean))}">${user.rank || 'Üye'}</span></td>
+        <td><span class="rank-badge ${targetRankClean === 'basyonetici' ? 'basyonetici' : (targetRankClean === 'moderator' ? 'moderator' : (targetRankClean === 'uye' ? 'uye' : targetRankClean))}">${user.rank || 'Üye'}</span></td>
         <td>${user.balance || 0}</td>
         <td>${editButton}</td>
       `;
