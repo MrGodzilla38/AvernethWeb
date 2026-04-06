@@ -103,6 +103,12 @@
   border-color: rgba(248, 113, 113, 0.3) !important;
 }
 
+.rank--basyonetici {
+  color: #b91c1c !important; /* Dark Red */
+  background: rgba(185, 28, 28, 0.12) !important;
+  border-color: rgba(185, 28, 28, 0.3) !important;
+}
+
 .rank--moderator {
   color: #60a5fa !important; /* Blue */
   background: rgba(96, 165, 250, 0.12) !important;

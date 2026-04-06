@@ -181,6 +181,7 @@
             var cls = "rank--uye"; // Default
 
             if (rLower === "kurucu") cls = "rank--kurucu";
+            else if (rLower === "baş yönetici" || rLower === "basyonetici") cls = "rank--basyonetici";
             else if (rLower === "admin") cls = "rank--admin";
             else if (rLower === "moderatör" || rLower === "moderator") cls = "rank--moderator";
             else if (rLower === "rehber") cls = "rank--rehber";
