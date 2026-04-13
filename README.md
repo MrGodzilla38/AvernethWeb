@@ -1,3 +1,5 @@
+Bu projenin devamı ve update alan projem: https://github.com/MrGodzilla38/AvernethWebV2.git
+
 # Averneth Web Projesi
 
 Averneth Web, Minecraft sunucusu için geliştirilmiş, modern ve karanlık temalı (Gothic) bir web arayüzü ve yönetim panelidir. Kullanıcıların kayıt olmasını, giriş yapmasını ve profillerini yönetmesini sağlar. Admin paneli üzerinden yetkili kullanıcılar diğer kullanıcıların bilgilerini düzenleyebilir.
